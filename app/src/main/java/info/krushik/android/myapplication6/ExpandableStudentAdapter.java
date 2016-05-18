@@ -58,13 +58,14 @@ public class ExpandableStudentAdapter extends BaseExpandableListAdapter {
         ((TextView) view.findViewById(R.id.textViewNumber)).setText(group.Number);
 
         View indicator = view.findViewById(R.id.indicator);
-
         if(getChildrenCount(groupPosition)> 0) {
             if (isExpanded) {
                 indicator.setBackgroundColor(mContext.getResources().getColor(R.color.red));
             } else {
                 indicator.setBackgroundColor(mContext.getResources().getColor(R.color.green));
             }
+        }else{
+            indicator.setVisibility(View.INVISIBLE);
         }
 
 

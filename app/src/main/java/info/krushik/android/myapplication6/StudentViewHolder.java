@@ -10,7 +10,7 @@ public class StudentViewHolder extends RecyclerView.ViewHolder {
     public TextView mTextViewFirstName;
     public TextView mTextViewLastName;
     public TextView mTextViewAge;
-    public LinearLayout mRootView;
+    public View mRootView;
 
     public StudentViewHolder(View itemView) {
         super(itemView);
@@ -18,6 +18,6 @@ public class StudentViewHolder extends RecyclerView.ViewHolder {
         mTextViewFirstName = (TextView) itemView.findViewById(R.id.textViewFirstName);
         mTextViewLastName = (TextView) itemView.findViewById(R.id.textViewLastName);
         mTextViewAge = (TextView) itemView.findViewById(R.id.textViewAge);
-        mRootView = (LinearLayout) itemView.findViewById(R.id.rootViev);
+        mRootView = itemView.findViewById(R.id.rootViev);
     }
 }

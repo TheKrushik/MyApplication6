@@ -22,7 +22,9 @@ public class RecyclerStudentAdapter extends RecyclerView.Adapter<StudentViewHold
     @Override
     public StudentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(mResource, null);
+//        View view = inflater.inflate(mResource, null);//1й пар-р - ресурс, 2й - родитель его(а родителя нет)
+        View view = inflater.inflate(mResource, parent, false); //2й пар-р можно передать в качестве родителя самого себя и будет по всей ширине
+        // 3-й пар-р - при инфлейте, можно автоматически не просто получить эту view, но и вставить ее в парента, по дефолту он true
 
         return new StudentViewHolder(view);
     }
@@ -35,14 +37,23 @@ public class RecyclerStudentAdapter extends RecyclerView.Adapter<StudentViewHold
         holder.mTextViewLastName.setText(student.LastName);
         holder.mTextViewAge.setText(String.valueOf(student.Age));
 
-        holder.mRootView.setOnClickListener(new View.OnClickListener() {
+        holder.mRootView.setOnClickListener(new View.OnClickListener() {//навешуем клик
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onClick(student);
-
+                if (mListener != null) { //проверка что объект(студент) существует
+                    mListener.onClick(student); //мы вызываем у него onClick
                 }
+            }
+        });
 
+        holder.mRootView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mListener != null) { //проверка что объект(студент) существует
+                    mListener.onLongClick(student); //мы вызываем у него onLongClick
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -54,14 +65,15 @@ public class RecyclerStudentAdapter extends RecyclerView.Adapter<StudentViewHold
     }
 
 
+//делаем свой интерфейс
+    private StudentListener mListener;//у нас есть переменная
 
-    private StudentListener mListener;
-
-    public void  setStudentListener(StudentListener listener){
+    public void  setStudentListener(StudentListener listener){//кот. содержит в себе объект
         mListener = listener;
     }
 
-    public interface StudentListener {
+    public interface StudentListener {//этот объект реализует этот интерфейс
         void onClick(Student student);
+        void onLongClick(Student student);
     }
 }
